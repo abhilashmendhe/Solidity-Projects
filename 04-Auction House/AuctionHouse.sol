@@ -8,26 +8,35 @@ pragma solidity ^0.8.30; // this is the solidity version
 */
 
 contract AuctionHouse {
-
+    struct BidderInfo {
+        address bidder;
+        uint256 amount;
+    }
     struct BidItem {
         address owner;
         string itemName;
         string itemInfo;
         uint256 bidEndTime;
+        BidderInfo[] bidders;
     }
-
+    
     BidItem[] bidItems;
-
+    
     function createBid(string memory _itemName, string memory _itemInfo, uint256 _days, uint256 _hours, uint256 _mins, uint256 _secs) public {
         
         uint256 _bidEndTime = block.timestamp + (_days * 1 days) + (_hours * 1 hours) + (_mins * 1 minutes) + (_secs * 1 seconds);
         require(_bidEndTime <= (block.timestamp + 432000), "Bidding time should be less than 5 days.");
-        BidItem memory newBidItem = BidItem(msg.sender, _itemName, _itemInfo, _bidEndTime);
-        bidItems.push(newBidItem);
+        
+        bidItems.push();
+        BidItem storage newBidItem = bidItems[bidItems.length - 1];
+        newBidItem.owner = msg.sender;
+        newBidItem.itemName = _itemName;
+        newBidItem.itemInfo = _itemInfo;
+        newBidItem.bidEndTime = _bidEndTime;
     }
 
     function getBidItem(uint256 _index) public view returns (BidItem memory) {
-        require(_index < bidItems.length, "Invalid index value!");
+        require(_index < bidItems.length, "Invalid bid item index value!");
         return bidItems[_index];
     }
     
@@ -35,6 +44,16 @@ contract AuctionHouse {
         return bidItems;
     }
 
+    function bidOnItem(uint256 _index, uint256 amount) public {
+        require(_index < bidItems.length, "Invalid bid item index value!");
+        
+        BidItem storage bidItem = bidItems[_index];
 
+        require(msg.sender != bidItem.owner, "Owner can't bid on their own items.");
+        require(block.timestamp < bidItem.bidEndTime, "Bid time closed. Can't bid on the item anymore.");
+        
+        BidderInfo memory newBidder = BidderInfo(msg.sender, amount);
+        bidItem.bidders.push(newBidder);
+    }
 
 }
