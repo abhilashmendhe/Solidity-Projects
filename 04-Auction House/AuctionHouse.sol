@@ -56,4 +56,29 @@ contract AuctionHouse {
         bidItem.bidders.push(newBidder);
     }
 
+    function unBidOnItem(uint256 _index) public returns (string memory){
+        require(_index < bidItems.length, "Invalid bid item index value!");
+        
+        BidItem storage bidItem = bidItems[_index];
+
+        require(block.timestamp < bidItem.bidEndTime, "Bid time closed. Can't unbid on the item anymore.");
+        
+        bool bidderFound = false;
+        uint bidInd = 0;
+        for (uint256 i=0; i< bidItem.bidders.length; i++) {
+            if (msg.sender == bidItem.bidders[i].bidder) {
+                bidderFound = true;
+                bidInd = i;
+                break;
+            }
+        }
+        if (bidderFound) {
+            bidItem.bidders[bidInd] = bidItem.bidders[bidItem.bidders.length-1];
+            bidItem.bidders.pop();
+            return "Succesfully un-bid";
+        } else {
+            return "Bidder not found. Can't un-bid";
+        }
+    }
+
 }
