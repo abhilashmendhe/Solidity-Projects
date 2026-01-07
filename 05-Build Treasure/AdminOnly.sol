@@ -27,11 +27,12 @@ contract TreasureContract {
     
     mapping(string => User[]) treas_users;
 
+    mapping (address => string[]) public withdrawlTreasures;
+
     function addTreasure(string memory tName) public {
         treasures.push(tName);
-        // User[] memory users;
-        // treas_users[tName] = users;
     }
+
     function listTreasures() public view returns(string[] memory) {
         return treasures;
     }
@@ -51,4 +52,34 @@ contract TreasureContract {
         users.push(newUser);
     }
 
+    function listUsersOfTreasure(uint256 tIndex) public view checkIndex(tIndex) returns (User[] memory) {
+        return treas_users[treasures[tIndex]];
+    }
+
+    function allowWithdraw(uint256 tIndex, address user) public checkIndex(tIndex) {
+        require(i_owner==msg.sender, "Only owner of the treasure can approve for withdrawal.");
+        User[] storage users = treas_users[treasures[tIndex]];
+
+        require(users.length>0, "No users found to approve for withdrawal.");
+        for(uint256 i = 0; i < users.length; i++) {
+            if(users[i].user==user) {
+                users[i].approval = true;
+            }
+        }
+    }
+
+    function viewWithdrawlTreasure() public view returns (string[] memory) {
+        return withdrawlTreasures[msg.sender];
+    }    
+    
+    function withdrawTreasure(uint256 tIndex) public {
+        
+        User[] memory users = treas_users[treasures[tIndex]];
+        
+        for(uint256 i=0; i<users.length; i++) {
+            if (users[i].approval) {
+                withdrawlTreasures[msg.sender].push(treasures[tIndex]);
+            }
+        }
+    }
 }
