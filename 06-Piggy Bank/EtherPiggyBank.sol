@@ -61,6 +61,8 @@ contract DigitalPiggyBank {
     }
     function deposit() public payable onlyNormalMemeber {
         require(registered_users[msg.sender].userAddress!=0x0000000000000000000000000000000000000000, "Account does not exists.");
+        require(registered_users[msg.sender].registered, "Not approved to perform this action.");
+        require(msg.value>1000000000000, "Deposit amount should be greater than 1000000000000 wei.");
         uint256 bankFee = 1000000000000;
         registered_users[msg.sender].amt += (msg.value-bankFee);
         bm.balance += bankFee;
@@ -68,6 +70,8 @@ contract DigitalPiggyBank {
 
     function withdraw() public payable onlyNormalMemeber {
         require(registered_users[msg.sender].userAddress!=0x0000000000000000000000000000000000000000, "Account does not exists.");
+        require(registered_users[msg.sender].registered, "Not approved to perform this action.");
+        require(msg.value<=registered_users[msg.sender].amt, "Insufficient amount to withdraw.");
         registered_users[msg.sender].amt -= msg.value;
     }
 }
