@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 
+/*
+    Build a simple IOU contract for a private group of friends. Each user can deposit ETH, 
+    track personal balances, log who owes who, and settle debts — all on-chain. 
+    You’ll learn how to accept real Ether using `payable`, transfer funds between addresses, 
+    and use nested mappings to represent relationships like 'Alice owes Bob'. 
+    This contract mirrors real-world borrowing and lending, and teaches you how to model those 
+    interactions in Solidity.
+*/
+
 contract SimpleIOU {
 
     address public immutable i_owner;
@@ -29,7 +38,7 @@ contract SimpleIOU {
         friendsInfo[msg.sender] = mySelf;
     }
 
-    
+
 
 
 
