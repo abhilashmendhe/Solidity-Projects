@@ -16,3 +16,4 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 7. **Day 7 - Fundamentals:**  Build a simple IOU contract for a private group of friends...
 
+8. **Day 8 - Intermediate:** Build a multi-currency digital tip jar! 
