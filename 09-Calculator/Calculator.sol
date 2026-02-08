@@ -14,7 +14,7 @@ contract Calculator {
 
     
     address immutable _iowner;
-    AdvanceCalculator advCalc = new AdvanceCalculator();
+    address public advanceCalculatorAddress;
 
     constructor() {
         _iowner = msg.sender;
@@ -45,4 +45,13 @@ contract Calculator {
         return x % y;
     }
 
+     
+    function setAdvanceCalculator(address _address) public OnlyOwner {
+        advanceCalculatorAddress = _address;
+    }
+
+    function pow(uint256 a, uint256 b) public view returns(uint256) {
+        AdvanceCalculator advCalc = AdvanceCalculator(advanceCalculatorAddress);
+        return advCalc.pow(a, b);
+    }
 }
