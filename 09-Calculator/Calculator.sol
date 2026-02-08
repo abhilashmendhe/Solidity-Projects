@@ -50,8 +50,21 @@ contract Calculator {
         advanceCalculatorAddress = _address;
     }
 
-    function pow(uint256 a, uint256 b) public view returns(uint256) {
+    function pow(uint256 a, uint256 b) public view OnlyOwner returns(uint256) {
+        // This process is called address casting — you’re converting an address into a contract reference so you can interact with it directly.
         AdvanceCalculator advCalc = AdvanceCalculator(advanceCalculatorAddress);
         return advCalc.pow(a, b);
+    }
+
+    function sqrt(uint256 a) public OnlyOwner returns (uint256) {
+        // ABI stands for Application Binary Interface. 
+        // Think of it as a contract’s "communication protocol" — it defines how data must be structured when one contract calls another.
+        // We now call external contract when knowing only it's address.
+
+        bytes memory data = abi.encodeWithSignature("sqrt(uint256 a)", a);
+        (bool success, bytes memory returnData) = advanceCalculatorAddress.call(data);
+        require(success, "External call failed");
+
+        return abi.decode(returnData, (uint256));
     }
 }
