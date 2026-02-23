@@ -85,5 +85,6 @@ contract HelperConfig is Script, CodeConstants {
             callbackGasLimit: 500000, // 500_000
             subscriptionId: 0 //need to fix this
         });
+        return localNetworkConfig;
     }
 }

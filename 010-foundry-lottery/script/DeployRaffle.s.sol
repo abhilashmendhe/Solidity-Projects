@@ -7,7 +7,7 @@ import {HelperConfig} from "./HelperConfig.s.sol";
 
 contract DeployRaffle is Script {
  
-    function fun() public {
+    function run() public {
 
     }
 
