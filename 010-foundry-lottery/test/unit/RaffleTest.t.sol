@@ -22,6 +22,9 @@ contract RaffleTest is Test {
     address public PLAYER = makeAddr("player");
     uint256 public constant STARTING_PLAYER_BALANCE = 10 ether;
 
+    event RaffleEntered(address indexed player);
+    event WinnerPicked(address indexed winner);
+
     function setUp() external {
          // create an instance of the deployer script
         console.log("RaffleTest / setUp : creating deployer instance");
@@ -66,5 +69,38 @@ contract RaffleTest is Test {
         // Asset
         address playerRecorded = raffle.getPlayer(0);
         assert(playerRecorded == PLAYER);
+    }
+
+    function testEnteringRaffleEmitsEvent() public {
+        // Arrange
+        vm.prank(PLAYER);
+
+        // Act
+        vm.expectEmit(true, false, false, false, address(raffle));
+        emit RaffleEntered(PLAYER);
+        // emit RaffleEntered(address(0));
+
+        // Assert
+        raffle.enterRaffle{value: entranceFee}();
+    }
+
+    function testDontAllowPlayersToEnterWhileRaffleIsCalculating()public {
+        // Arrange
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+
+        // we don't have to wait explicitly to pass the time, so use vm.warp and vm.roll
+        vm.warp(block.timestamp + interval + 1); // set timestamp of the block
+        vm.roll(block.number + 1);               // we can add another block when a new transaction was done
+        // so our idea of above was to first complete the raffle process or (ongoing), 
+        // and then use vm.roll to create new block
+
+        raffle.performUpkeep("");
+
+        // Act / Assert
+        vm.expectRevert(Raffle.Raffle__RaffleNotOpen.selector);
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+        
     }
 }
