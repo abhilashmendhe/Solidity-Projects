@@ -157,13 +157,32 @@ contract RaffleTest is Test {
         raffle.enterRaffle{value: entranceFee}();
         currentBalance = currentBalance + entranceFee;
         numPlayers = 1;
-        
+
         // Act / Assert
         vm.expectRevert(
             abi.encodeWithSelector(Raffle.Raffle__UpkeepNotNeeded.selector, currentBalance, numPlayers, rState)
         );
         raffle.performUpkeep("");
-
-
     }    
+
+    // what if we need to get data from emitted events in our tests?
+
+    function testPerformUpkeepUpdatesRaffleStateAndEmitsRequestId() public {
+        // Arrange
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+        vm.warp(block.timestamp + interval + 1); // set timestamp of the block
+        vm.roll(block.number + 1);               // we can add another block when a new transaction was done
+
+        // Act  
+        vm.recordLogs();
+        raffle.performUpkeep("");
+        Vm.Log[] memory entries = vm.getRecordedLogs();
+        bytes32 requestId = entries[1].topics[1];
+
+        // Assert 
+        Raffle.RaffleState raffleState = raffle.getRaffleState();
+        assert(uint256(requestId) > 0);
+        assert(uint256(raffleState) == 1);
+    }
 }
