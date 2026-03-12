@@ -166,14 +166,17 @@ contract RaffleTest is Test {
     }    
 
     // what if we need to get data from emitted events in our tests?
-
-    function testPerformUpkeepUpdatesRaffleStateAndEmitsRequestId() public {
+    modifier raffleEntered {
         // Arrange
+        
         vm.prank(PLAYER);
         raffle.enterRaffle{value: entranceFee}();
         vm.warp(block.timestamp + interval + 1); // set timestamp of the block
         vm.roll(block.number + 1);               // we can add another block when a new transaction was done
-
+        _;
+    }
+    function testPerformUpkeepUpdatesRaffleStateAndEmitsRequestId() public raffleEntered {
+        
         // Act  
         vm.recordLogs();
         raffle.performUpkeep("");
