@@ -19,3 +19,5 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 8. **Day 8 - Intermediate:** Build a multi-currency digital tip jar! 
 
 9. **Day 9 - Intermediate:** Build a calculator.. Calling external contracts through its address.. 
+
+10. **Day 10 - Intermediate/Advanced:** A walkthough project by cyfrin about creating a random raffle contract.. 
