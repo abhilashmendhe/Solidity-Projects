@@ -18,6 +18,7 @@ struct UserSession {
     uint256 caloriesBurnt;
     bool sessionComplete;
     bool sessionFound;
+    bool markChecked;
 }
 
 enum Gender { Male, Female }
@@ -33,10 +34,14 @@ struct User {
     uint256 completedSessionCount;
     uint256 startTime;
     uint256 endTimeOfWeek;
+    uint256 totalBurnedCalories;
     bool exists;
 }
 
 contract ActivityTracker {
+
+    uint256 constant TOTAL_WORKOUT_SECONDS = 30000;
+    uint256 constant TOTAL_WORKOUTS = 10;
 
     event WorkoutGoal(address indexed user, uint256 calorieCount);
 
@@ -71,6 +76,7 @@ contract ActivityTracker {
             completedSessionCount: 0,
             startTime: block.timestamp,
             endTimeOfWeek: block.timestamp + 604800,
+            totalBurnedCalories: 0,
             exists: true
         });
 
@@ -113,7 +119,8 @@ contract ActivityTracker {
             recordTime: 0,
             caloriesBurnt: 0,
             sessionComplete: false,
-            sessionFound: true
+            sessionFound: true,
+            markChecked: false
         });
         userSessions[msg.sender][logUsers[msg.sender].sessionCount] = tempUserSession;
         logUsers[msg.sender].sessionCount++;
@@ -133,22 +140,67 @@ contract ActivityTracker {
     }
 
     // End workout
-    function endWorkoutSession(uint256 sessionId) public {
+    function endWorkoutSession(uint256 sessionId, uint256 met) public {
         require(userSessions[msg.sender][sessionId].totalWorkoutTime > 0, "Workout already completed");
+        require(met < 2 || met > 12, "MET should be between 2 to 12");
+
         userSessions[msg.sender][sessionId].endTime = block.timestamp;
 
         // compute calories
+        uint256 totalWorkoutTime = userSessions[msg.sender][sessionId].endTime - userSessions[msg.sender][sessionId].startTime;
+        userSessions[msg.sender][sessionId].totalWorkoutTime = totalWorkoutTime;
+        uint256 calories = computeCalories(met, totalWorkoutTime);
+
+        // add colories
+        logUsers[msg.sender].totalBurnedCalories += calories;
 
         // mark complete sesssion 
         userSessions[msg.sender][sessionId].sessionComplete = true;
 
         // increase sessoin count in user 
+        logUsers[msg.sender].completedSessionCount++;
+
+        if (logUsers[msg.sender].completedSessionCount >= TOTAL_WORKOUTS || checkIfDaysCompletedForWorkout()) {
+            logUsers[msg.sender].completedSessionCount = 0;
+            emit WorkoutGoal(msg.sender, logUsers[msg.sender].totalBurnedCalories);
+        }
 
     }
     
     // Compute calories
-    function computeCalories() public {
+    function computeCalories(uint256 met, uint256 totalWorkoutTime) internal view returns (uint256) {
+        return ((met * 3 * logUsers[msg.sender].weight)/200) * totalWorkoutTime;
+    }
 
+    // Compute days completed for workout
+    function checkIfDaysCompletedForWorkout() internal returns(bool) {
+        
+        bool f = false;
+        uint256 sumTotalWorkoutTime = 0;
+        bool[] memory keepMarkIndices = new bool[](logUsers[msg.sender].sessionCount);
+
+        // keepMarkIndices.push(0);
+        for(uint256 i=0; i < logUsers[msg.sender].sessionCount; i++) {
+            if (!userSessions[msg.sender][i].markChecked) {
+                keepMarkIndices[i] = true;
+                sumTotalWorkoutTime += userSessions[msg.sender][i].totalWorkoutTime;
+            }
+        }
+
+        if (sumTotalWorkoutTime >= TOTAL_WORKOUT_SECONDS) {
+
+            // set flag true
+            f = true;
+
+            // now mark
+            for(uint256 i=0; i<keepMarkIndices.length; i++) {
+                if (keepMarkIndices[i]) {
+                    userSessions[msg.sender][i].markChecked = true;
+                }
+            }
+        }
+
+        return f;
     }
     
 }
