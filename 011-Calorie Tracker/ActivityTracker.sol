@@ -16,6 +16,8 @@ struct UserSession {
     uint256 totalWorkoutTime;
     uint256 recordTime;
     uint256 caloriesBurnt;
+    bool sessionComplete;
+    bool sessionFound;
 }
 
 enum Gender { Male, Female }
@@ -32,6 +34,8 @@ struct User {
 }
 
 contract ActivityTracker {
+
+    event WorkoutGoal(address indexed user, uint256 calorieCount);
 
     address[] public users;
     mapping(address => User) public logUsers;
@@ -86,4 +90,29 @@ contract ActivityTracker {
         }
         delete logUsers[msg.sender];
     }
+
+    function createSession(
+        string memory sessionName
+    ) public {
+        require(!logUsers[msg.sender].exists, "User not registered");
+        UserSession memory tempUserSession = UserSession({
+            workoutType: sessionName,
+            startTime: 0,
+            endTime: 0,
+            totalWorkoutTime: 0,
+            recordTime: 0,
+            caloriesBurnt: 0,
+            sessionComplete: false,
+            sessionFound: true
+        });
+        userSessions[msg.sender][logUsers[msg.sender].sessionCount] = tempUserSession;
+        logUsers[msg.sender].sessionCount++;
+    }
+
+    function deleteSession(uint256 sessionId) public {
+        require(!logUsers[msg.sender].exists, "User not registered");
+        require(!userSessions[msg.sender][sessionId].sessionFound, "No session found");
+        delete userSessions[msg.sender][sessionId];
+    }
+
 }
