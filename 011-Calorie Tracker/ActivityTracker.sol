@@ -30,6 +30,9 @@ struct User {
     uint16 weight;
     Gender gender;
     uint256 sessionCount;
+    uint256 completedSessionCount;
+    uint256 startTime;
+    uint256 endTimeOfWeek;
     bool exists;
 }
 
@@ -43,9 +46,9 @@ contract ActivityTracker {
     
     modifier registerCheck(string memory name, uint8 age, uint8 height, uint16 weight) {
         require(keccak256(bytes(name)) != keccak256(bytes("")), "Name should not be empty");
-        require(age > 0 && age < 100, "Age should not be more than 100");
-        require(height > 0 && height < 200, "Height should not exceed more than 200 cm");
-        require(weight > 0 && weight < 600, "Weight should not exceed more than 600 kg");
+        require(age > 0 && age < 100, "Age should be greater than 0 and not more than 100");
+        require(height > 0 && height < 200, "Height should be greater than 0 and should not exceed more than 200 cm");
+        require(weight > 0 && weight < 600, "Weight should be greater than 0 and should not exceed more than 600 kg");
         _;
     }
 
@@ -65,6 +68,9 @@ contract ActivityTracker {
             weight:  weight,
             gender: gender,
             sessionCount: 0,
+            completedSessionCount: 0,
+            startTime: block.timestamp,
+            endTimeOfWeek: block.timestamp + 604800,
             exists: true
         });
 
@@ -72,6 +78,10 @@ contract ActivityTracker {
         logUsers[msg.sender] = tmpUser;
     }   
     
+    function getAllUsers() public view returns(address[] memory) {
+        return users;
+    }
+
     function deregisterUser() public {
         require(!logUsers[msg.sender].exists, "User not registered");
 
@@ -115,4 +125,30 @@ contract ActivityTracker {
         delete userSessions[msg.sender][sessionId];
     }
 
+    // Start workout
+    function startWorkoutSession(uint256 sessionId) public {
+        require(userSessions[msg.sender][sessionId].startTime > 0, "Workout already in progress or completed");
+        userSessions[msg.sender][sessionId].startTime = block.timestamp;
+        
+    }
+
+    // End workout
+    function endWorkoutSession(uint256 sessionId) public {
+        require(userSessions[msg.sender][sessionId].totalWorkoutTime > 0, "Workout already completed");
+        userSessions[msg.sender][sessionId].endTime = block.timestamp;
+
+        // compute calories
+
+        // mark complete sesssion 
+        userSessions[msg.sender][sessionId].sessionComplete = true;
+
+        // increase sessoin count in user 
+
+    }
+    
+    // Compute calories
+    function computeCalories() public {
+
+    }
+    
 }
