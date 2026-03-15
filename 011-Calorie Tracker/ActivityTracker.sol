@@ -21,27 +21,27 @@ struct UserSession {
 enum Gender { Male, Female }
 
 struct User {
+    address userAddress;
     string name;
     uint8 age;
     uint8 height;
     uint16 weight;
     Gender gender;
     uint256 sessionCount;
+    bool exists;
 }
 
 contract ActivityTracker {
 
-
-    
     address[] public users;
     mapping(address => User) public logUsers;
     mapping(address => mapping(uint256 => UserSession)) public userSessions;
     
     modifier registerCheck(string memory name, uint8 age, uint8 height, uint16 weight) {
         require(keccak256(bytes(name)) != keccak256(bytes("")), "Name should not be empty");
-        require(age < 100, "Age should not be more than 100");
-        require(height < 200, "Height should not exceed more than 200 cm");
-        require(weight < 600, "Weight should not exceed more than 600 kg");
+        require(age > 0 && age < 100, "Age should not be more than 100");
+        require(height > 0 && height < 200, "Height should not exceed more than 200 cm");
+        require(weight > 0 && weight < 600, "Weight should not exceed more than 600 kg");
         _;
     }
 
@@ -54,16 +54,36 @@ contract ActivityTracker {
     ) public registerCheck(name, age, height, weight) {
         
         User memory tmpUser = User({
+            userAddress: msg.sender,
             name: name, 
             age: age, 
             height: height, 
             weight:  weight,
             gender: gender,
-            sessionCount: 0
+            sessionCount: 0,
+            exists: true
         });
 
         users.push(msg.sender);
         logUsers[msg.sender] = tmpUser;
     }   
     
+    function deregisterUser() public {
+        require(!logUsers[msg.sender].exists, "User not registered");
+
+        uint256 index = 0;
+        for(uint256 i=0; i<users.length; i++) {
+            if (users[i] == msg.sender ){
+                index = i;
+                break;
+            }
+        }
+        users[index] = users[users.length-1];
+        users.pop();
+
+        for (uint256 i=0; i<logUsers[msg.sender].sessionCount; i++) {
+            delete userSessions[msg.sender][i];
+        }
+        delete logUsers[msg.sender];
+    }
 }
