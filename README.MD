@@ -20,4 +20,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 9. **Day 9 - Intermediate:** Build a calculator.. Calling external contracts through its address.. 
 
-10. **Day 10 - Intermediate/Advanced:** A walkthough project by cyfrin about creating a random raffle contract.. 
+10. **Day 10 - Intermediate:** Build a calorie tracker and emit events...
+
+---
+
+1. **Foundry Lottery:** Walkthrough project from cyfrin. Built a lottery project on solidity...
