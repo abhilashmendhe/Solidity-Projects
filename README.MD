@@ -22,6 +22,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 10. **Day 10 - Intermediate:** Build a calorie tracker and emit events...
 
+11. **Day 11 - Intermediate:** Learned inheritence. Build an Ownalble.sol contract and inheriting this contract from another contract..
+
 ---
 
 1. **Foundry Lottery:** Walkthrough project from cyfrin. Built a lottery project on solidity...
