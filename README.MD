@@ -24,6 +24,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 11. **Day 11 - Intermediate:** Learned inheritence. Build an Ownalble.sol contract and inheriting this contract from another contract..
 
+12. **Day 12 - Intermediate:** Learnt to build a custom ERC-20 token from EIP-20 standards.
+
 ---
 
 1. **Foundry Lottery:** Walkthrough project from cyfrin. Built a lottery project on solidity...
