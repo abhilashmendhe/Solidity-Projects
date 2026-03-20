@@ -41,8 +41,8 @@ contract MyFirstToken {
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
         require(_from != address(0) || _to != address(0), "Invalid address");
         require(sBalances[_from] >= _value, "Not enough balance");
-
-        // require(sA);
+        require(sAllowances[_from][msg.sender] >= _value, "Allowances is too less");
+        
         sAllowances[_from][msg.sender] -= _value;
         _transfer(_from, _to, _value);
         return true;
