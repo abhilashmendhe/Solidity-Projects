@@ -26,6 +26,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 12. **Day 12 - Intermediate:** Learnt to build a custom ERC-20 token from EIP-20 standards.
 
+13. **Day 13 - Intermediate:** Built a contract that sells token or others can buy tokens for a ETH price.
+
 ---
 
 1. **Foundry Lottery:** Walkthrough project from cyfrin. Built a lottery project on solidity...
