@@ -83,8 +83,17 @@ contract PreorderTokens is MyMenToken {
 
     function purchaseToken() public payable {
 
+        // Check 1: Is sale active?
+        require(isSaleActive(), "Sorry! Sale has ended.");
+        // Check 2: If buying amount is less than minimum purchase?
+        require(msg.value >= minPurchaseAmt, "Insufficient purchase amount.");
+        // Check 3: If buying amount is more than maximum purchase?
+        require(msg.value <= maxPurchaseAmt, "Buying amount is too high.");
+
         // 1. Calculate the token amount to send to users
         uint256 tokenAmt = (msg.value * (10**decimals())) / tokenPrice;
+        // Check 4. If tokens are left or not
+        require(availibilityOfTokens() >= tokenAmt, "No tokens left for sale");
 
         // 2. Update total value raised. (update the total amount of the purchased tokens by multiple users)
         totalValueRaised += msg.value;
@@ -95,6 +104,11 @@ contract PreorderTokens is MyMenToken {
     }
     
     function endSale() public payable {
+
+        // Check 1: Only owner can perform this action.
+        require(msg.sender == projectOwner, "Your not the owner.");
+        // Check 2: Check if sale has ended?
+        require(!isSaleActive(), "Sale is still running.");
 
         //  1. Set finalized to true to indicate that sale as ended.
         finalized = true;
@@ -108,4 +122,10 @@ contract PreorderTokens is MyMenToken {
 
         emit SaleEnd(totalValueRaised, soldTokens);
     }
+
+    receive() external payable {
+        purchaseToken();
+    }
+
+
 }
