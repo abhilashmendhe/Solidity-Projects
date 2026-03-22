@@ -37,7 +37,7 @@ abstract contract BaseDepositBox is IDepositBox {
         emit SecretStored(msg.sender);
     }
 
-    function getSecret() public view returns (string memory) {
+    function getSecret() public view virtual returns (string memory) {
         return secret;
     }
 
