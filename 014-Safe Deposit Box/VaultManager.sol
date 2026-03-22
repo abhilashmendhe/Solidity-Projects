@@ -49,6 +49,26 @@ contract VaultManager {
         box.storeSecret(secret);
     }
 
+    function transferOwnership(address _boxAddress, address _newOwner) external {
+        
+        IDepositBox box = IDepositBox(_boxAddress);
+        require(box.getOwner()==msg.sender, "Not the box owner");
+
+        box.transferOwnership(_newOwner);
+
+        // delete vault from userdepositboxes
+        address[] storage boxes = userDepositBoxes[msg.sender];
+        for(uint256 i=0; i<boxes.length; i++) {
+            if (boxes[i] == _boxAddress) {
+                boxes[i] = boxes[boxes.length-1];
+                boxes.pop();
+                break;
+            }
+        }
+
+        userDepositBoxes[_newOwner].push(_boxAddress);
+    }
+
     function getUserBoxes() external view returns (address[] memory) {
         return userDepositBoxes[msg.sender];
     }
@@ -56,4 +76,9 @@ contract VaultManager {
     function getBoxName(address boxAddress) external view returns (string memory) {
         return boxNames[boxAddress];
     }
+
+    function getBoxInfor(address _boxAddress) external view returns (string memory boxType, address owner, uint256 depoitTime, string memory name) {
+        IDepositBox box = IDepositBox(_boxAddress);
+        return (box.getBoxType(), box.getOwner(), box.getDepositTime(), boxNames[_boxAddress]);
+    } 
 }
