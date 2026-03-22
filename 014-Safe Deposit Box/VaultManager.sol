@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.31;
 
+/*
+    Build a smart bank that offers different types of deposit boxes — basic, premium, time-locked, etc.
+    Each box follows a common interface and supports ownership transfer. A central VaultManager contract interacts
+    with all deposit boxes in a unified way, letting users store secrets and transfer ownership like handing 
+    over the key to a digital locker. This teaches interface design, modularity, and how contracts communicate with each other safely.
+*/
+
 import "./IDepositBox.sol";
 import "./BasicDepositBox.sol";
 import "./PremiumDepositBox.sol";
