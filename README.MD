@@ -33,3 +33,4 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 ---
 
 1. **Foundry Lottery:** Walkthrough project from cyfrin. Built a lottery project on solidity...
+2. **Foundry ERC-721:** Walkthrough project on ERC-721 by cyfrin.
