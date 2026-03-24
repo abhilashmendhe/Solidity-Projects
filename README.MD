@@ -35,6 +35,7 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 15. **[Day 15 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/015-Gas%20Saver%20Voting)** Implemented a gas efficient voter contract.
 
 16. **[Day 16 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/016-PluginStore)** Worked on calling external contract that can act as a plugin.
+
 ---
 
 1. **[Foundry Lottery:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/010-foundry-lottery)** Walkthrough project from cyfrin. Built a lottery project on solidity...
