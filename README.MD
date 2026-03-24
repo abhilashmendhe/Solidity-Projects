@@ -32,6 +32,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 14. **[Day 14 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/014-Safe%20Deposit%20Box)** Implemented a vault manager contract where users can create different types of vault. Learned interfaces, abstraction, contract-to-contract interaction.
 
+15. **[Day 15 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/015-Gas%20Saver%20Voting)** Implemented a gas efficient voter contract.
+
 ---
 
 1. **[Foundry Lottery:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/010-foundry-lottery)** Walkthrough project from cyfrin. Built a lottery project on solidity...
