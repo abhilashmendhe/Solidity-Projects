@@ -55,6 +55,7 @@ contract GasEfficientVoting {
     function voteProposal(uint8 proposalId) public returns(uint256){
 
         if (proposals[proposalId].owner == address(0)) revert Voting__NoProposals();
+        require(block.timestamp < proposals[proposalId].endTime, "Proposal ended.");
         if (proposals[proposalId].votingEnded == true) revert Voting__ProposalExecuted();
         if (proposals[proposalId].owner == msg.sender) revert Voting__OwnerCannotVote();
         if (proposalId < 0 && proposalId > 256) revert Voting__LimitProposals("Proposal IDs from 1 - 255");
@@ -77,6 +78,7 @@ contract GasEfficientVoting {
 
     function executeProposal(uint8 proposalId) public {
         if (proposals[proposalId].owner == address(0)) revert Voting__NoProposals();
+        require(block.timestamp < proposals[proposalId].endTime, "Proposal ended.");
         if (proposals[proposalId].votingEnded == true) revert Voting__ProposalExecuted();
         require(proposals[proposalId].owner == msg.sender,"Only owner can execute the proposals.");
 
@@ -84,5 +86,24 @@ contract GasEfficientVoting {
         emit ProposalExecuted(msg.sender, proposalId);
     }
 
-    function getProposal() public {}
+    function getProposal(uint8 proposalId) public view returns(
+        bytes32 name,
+        uint32 voteCount,
+        uint32 startTime,
+        uint32 endTime,
+        bool executed,
+        bool active
+    ) {
+        if (proposals[proposalId].owner == address(0)) revert Voting__NoProposals();
+
+        Proposal storage proposal = proposals[proposalId];
+        return (
+            proposal.name,
+            proposal.voteCounts,
+            proposal.startTime,
+            proposal.endTime,
+            proposal.votingEnded,
+            (block.timestamp >= proposal.startTime && block.timestamp <= proposal.endTime)
+        );
+    }
 }
