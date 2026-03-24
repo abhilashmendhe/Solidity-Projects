@@ -70,6 +70,12 @@ contract PluginStore {
         require (success, "Plugin execution failed!");
         return abi.decode(result, (string));
     }
-
-    
+   
 }
+
+
+/*
+    pluginStore.runPlugin("weapon", "setWeapon(address,string)", msg.sender, "Golden Axe");
+
+    the above is the way to run runPlugin function.
+*/
