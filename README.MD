@@ -36,6 +36,8 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 16. **[Day 16 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/016-PluginStore)** Worked on calling external contract that can act as a plugin.
 
+17. **[Day 17 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/017-UpgradeHub)** Worked on upgradeable contract where we used sproxy pattern that makes delegate call for upgrades..
+
 ---
 
 1. **[Foundry Lottery:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/010-foundry-lottery)** Walkthrough project from cyfrin. Built a lottery project on solidity...
