@@ -1,0 +1,202 @@
+{
+	"compiler": {
+		"version": "0.8.31+commit.fd3a2265"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "duration",
+						"type": "uint256"
+					}
+				],
+				"name": "addPlan",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "isActive",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "logicContract",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "planDuration",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "planPrices",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					}
+				],
+				"name": "subscribe",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "subscriptions",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "planId",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "expiry",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "paused",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"017-UpgradeHub/SubscriptionLogicV1.sol": "SubscriptionLogicV1"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"017-UpgradeHub/SubscriptionLogicV1.sol": {
+			"keccak256": "0xa9c89e170303c8708a4eee8f69c862fba57d46c2496dbd8d3a50e6897f43121a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e0942c4e872838043b9ba04748d70162d237a5dfeacbb898527dd2d2142831df",
+				"dweb:/ipfs/QmYXatXs9A1QG5CnXhAHsPKfxfuSTncMS4U5yEP8KKXxjL"
+			]
+		},
+		"017-UpgradeHub/SubscriptionStorageLayout.sol": {
+			"keccak256": "0x27875b6e9dbc2ca1859193fc65cc855cc16c743f77abc57aedbb263be8b51c7f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://37eda04b95af33974450f36b5a8f715afaa667da22e8e704f6f371fa26800819",
+				"dweb:/ipfs/QmP1GfnCUmvewUNz2at8RsfpwdvPqy4hK7ApKuXu6hZF2E"
+			]
+		}
+	},
+	"version": 1
+}

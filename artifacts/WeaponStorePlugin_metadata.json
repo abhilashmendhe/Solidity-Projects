@@ -1,0 +1,83 @@
+{
+	"compiler": {
+		"version": "0.8.31+commit.fd3a2265"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getWeapon",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "weapon",
+						"type": "string"
+					}
+				],
+				"name": "setWeapon",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"016-PluginStore/WeaponsPlugin.sol": "WeaponStorePlugin"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"016-PluginStore/WeaponsPlugin.sol": {
+			"keccak256": "0xfe5b6462837c7fb178d78496a6e75db0ba57495288a8ae9aae2eba9d1e8d0225",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0a438ede8e64b76f653379f67007d1e47c171f6647f9cb6d437457d2cf858ea8",
+				"dweb:/ipfs/QmPq4ayv1bNyL6jpyEvTt4Lv4Af7ZRbHHfzhRQGRa4Py3F"
+			]
+		}
+	},
+	"version": 1
+}
