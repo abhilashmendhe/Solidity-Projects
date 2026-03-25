@@ -21,7 +21,21 @@ pragma solidity ^0.8.31;
     So if you ever need to change behavior, you don’t touch the proxy — you just point it to a new logic contract. All the data stays safe.
 */
 
+
+// This contract only holds state variables
+
+struct Subscription {
+    uint8   planId;
+    uint256 expiry;
+    bool    paused;   
+}
+
 contract SubscriptionStorageLayout {
 
+    address public logicContract; // this is where the functionality will live on the contract address
+    address public owner;
 
+    mapping (address => Subscription) public subscriptions;
+    mapping (uint8   => uint256) public planPrices;
+    mapping (uint8   => uint256) public planDuration;
 }
