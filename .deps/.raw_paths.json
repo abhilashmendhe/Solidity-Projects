@@ -1,0 +1,19 @@
+{
+  "@openzeppelin/contracts@5.6.1/utils/Strings.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/Strings.sol",
+  "@openzeppelin/contracts@5.6.1/utils/math/Math.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/math/Math.sol",
+  "@openzeppelin/contracts@5.6.1/utils/Panic.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/Panic.sol",
+  "@openzeppelin/contracts@5.6.1/utils/math/SafeCast.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/math/SafeCast.sol",
+  "@openzeppelin/contracts@5.6.1/utils/math/SignedMath.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/math/SignedMath.sol",
+  "@openzeppelin/contracts@5.6.1/utils/Bytes.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/Bytes.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/FunctionsClient.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/FunctionsClient.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsClient.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsClient.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/vendor/solidity-cborutils/v2.0.0/CBOR.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/vendor/solidity-cborutils/v2.0.0/CBOR.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/vendor/@ensdomains/buffer/v0.1.0/Buffer.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/vendor/@ensdomains/buffer/v0.1.0/Buffer.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/shared/access/ConfirmedOwner.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/shared/access/ConfirmedOwner.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/IOwnable.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/IOwnable.sol",
+  "@chainlink/contracts@1.5.0/src/v0.8/shared/access/ConfirmedOwnerWithProposal.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/shared/access/ConfirmedOwnerWithProposal.sol"
+}

@@ -47,6 +47,50 @@ contract FetchWeatherChainlink is FunctionsClient, ConfirmedOwner {
         return donId;
     }
 
+    // my source string
+    string private constant SOURCE =
+    "const cityName = args[0].trim();"
+    "const apiKey = args[1].trim();"
+    "const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(cityName)}/today?unitGroup=metric&include=current&key=${apiKey}&contentType=flatjson`;"
+    "console.log('Request URL:', url);"
+    "const apiResponse = await Functions.makeHttpRequest({ url });"
+    "if (apiResponse.error) {"
+    "  console.error('API Error:', apiResponse.error);"
+    "  throw Error('Request failed');"
+    "}"
+    "const data = apiResponse.data;"
+    "if (!data || !data.currentConditions) {"
+    "  throw Error('Invalid API response');"
+    "}"
+    "const cc = data.currentConditions;"
+    "const retData = ["
+    "  `epoch:${cc.datetimeEpoch ?? 0}`,"
+    "  `temp:${cc.temp ?? 0}`,"
+    "  `humidity:${cc.humidity ?? 0}`,"
+    "  `precip:${cc.precip ?? 0}`,"
+    "  `snow:${cc.snow ?? 0}`,"
+    "  `windspeed:${cc.windspeed ?? 0}`,"
+    "  `uvindex:${cc.uvindex ?? 0}`,"
+    "  `cloudcover:${cc.cloudcover ?? 0}`"
+    "].join(';') + ';';"
+    "return Functions.encodeString(retData);";
+
+    function sendRequest(
+        uint64 subscriptionId,
+        string[] calldata args
+    ) external onlyOwner returns (bytes32 requestId) {
+
+        FunctionsRequest.Request memory req;
+        req.initializeRequestForInlineJavaScript(SOURCE); // Initialize the request with JS code
+        require(args.length > 0, "Missing characterId");
+        if (args.length > 0) req.setArgs(args); // Set the arguments for the request
+
+        // Send the request and store the request ID
+        s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, GAS_LIMIT, donId);
+
+        return s_lastRequestId;
+    }
+
     function fulfillRequest(
         bytes32 requestId,
         bytes memory response,
