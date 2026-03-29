@@ -6,6 +6,22 @@ import {FunctionsClient} from "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_
 import {FunctionsRequest} from "@chainlink/contracts@1.5.0/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol";
 import {ConfirmedOwner} from "@chainlink/contracts@1.5.0/src/v0.8/shared/access/ConfirmedOwner.sol";
 
+
+// How to execute this contract:
+// -----------------------------
+
+// 1. Create a subscription on https://functions.chain.link/sepolia.
+// 2. Fund with some LINK. 3-5 is enough.
+// 3. Deploy this contract on sepolia testnet.
+// 4. After deployment, add this contract address as a consumer to our created subscription.
+
+// If this contract is being called from another contract, then transfer the ownership of this contract to 
+// the contract where all the necessary executions are carried out. For e.g. making API request etc.
+
+// Refer this site https://docs.chain.link/chainlink-functions/getting-started
+
+
+
 contract FetchWeatherChainlink is FunctionsClient, ConfirmedOwner {
 
     using FunctionsRequest for FunctionsRequest.Request;
