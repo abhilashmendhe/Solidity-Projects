@@ -1,0 +1,104 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.31;
+
+/*
+    Build a smart contract that retrieves live weather data using an oracle like Chainlink. You'll create a decentralized 
+    crop insurance contract where farmers can claim insurance if rainfall drops below a certain threshold during the growing 
+    season. Since the Ethereum blockchain can't access real-world data on its own, you'll use an oracle to fetch off-chain 
+    weather information and trigger payouts automatically. This project demonstrates how to securely integrate external data 
+    into your contract logic and highlights the power of real-world connectivity in smart contracts.
+*/
+
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract FarmerInsurance is Ownable {
+
+    AggregatorV3Interface private weatherOracle;
+    AggregatorV3Interface private ethUsdPriceFeed;
+
+
+    uint256 public constant RAINFALL_THRESHOLD = 500;
+    uint256 public constant INSURANCE_PREMIUM_USD = 10;
+    uint256 public constant INSURANCE_PAYOUT_USD = 50;
+
+    mapping(address => bool) public hasInsurance;
+    mapping(address => uint256) public lastClaimTimestamp;
+
+    event InsurancePurchased(address indexed farmer, uint256 amount);
+    event ClaimSubmitted(address indexed farmer);
+    event ClaimPaid(address indexed farmer, uint256 amount);
+    event RainfallChecked(address indexed farmer, uint256 rainfall);
+
+    constructor(address _weatherOracle, address _ethUsdPriceFeed) payable Ownable(msg.sender) {
+        weatherOracle = AggregatorV3Interface(_weatherOracle);
+        ethUsdPriceFeed = AggregatorV3Interface(_ethUsdPriceFeed);
+    }
+
+    function buyInsurance() external  payable  {
+        uint256 ethPrice = getEthPrice();
+        uint256 premiumEth = (INSURANCE_PREMIUM_USD * 1E18)/ethPrice;
+
+        require(msg.value >= premiumEth,"Insufficient amount.");
+        require(!hasInsurance[msg.sender], "Already insured");
+
+        hasInsurance[msg.sender] = true;
+        emit InsurancePurchased(msg.sender, msg.value);
+    }
+
+    function checkRainfall() external {
+        require(hasInsurance[msg.sender], "No active insurance");
+        require(block.timestamp >= lastClaimTimestamp[msg.sender] + 1, "Wait for 24Hrs between claims");
+
+        // (uint80 roundId, int256 rainfall, uint256 updatedAt, uint80 answeredInRound) = weatherOracle.latestRoundData();
+        (
+            uint80 roundId,
+            int256 rainfall,
+            ,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        ) = weatherOracle.latestRoundData();
+
+        require(updatedAt > 0, "Round not complete");
+        require(answeredInRound == roundId, "Stale data");
+
+        uint256 currentRainFall = uint256(rainfall);
+        emit RainfallChecked(msg.sender, currentRainFall);
+        
+        if (currentRainFall < RAINFALL_THRESHOLD) {
+            lastClaimTimestamp[msg.sender] = block.timestamp;
+            emit ClaimSubmitted(msg.sender);
+        }
+        uint256 ethPrice = getEthPrice();
+        uint256 payoutInEth = (INSURANCE_PAYOUT_USD * 1e18) / ethPrice;
+        (bool success,) = msg.sender.call{value: payoutInEth}("");
+        require(success, "Failed transfer");
+        emit ClaimPaid(msg.sender, payoutInEth);    
+    }
+
+    function getEthPrice() public view returns(uint256) {
+        (
+            ,
+            int256 price, 
+            ,
+            ,
+        ) = ethUsdPriceFeed.latestRoundData();
+        return uint256(price);
+    }
+
+    function getCurrentRainfall() public view returns(uint256) {
+        (, int256 rainfall, , , ) = weatherOracle.latestRoundData();
+        return uint256(rainfall);
+    }
+
+    function withdraw() external onlyOwner {
+        (bool success,) = payable(owner()).call{value: address(this).balance}("");
+        require(success, "Withdrawal failed.");
+    }
+
+    receive() external payable {}
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+}
