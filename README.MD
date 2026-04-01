@@ -40,6 +40,7 @@ Doing soildity chalanges from [Web3Compass](https://www.web3compass.xyz/challeng
 
 18. **[Day 18 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/018-WeatherOracle)** Worked on calling external data from chainlink oracles. Understood how to write own custom chainlink functions to fetch data from external APIs...
 
+19. **[Day 19 - Advanced:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/019-SignThis)** Learned how to sign and verify a contract.
 ---
 
 1. **[Foundry Lottery:](https://github.com/abhilashmendhe/Solidity-Projects/tree/master/010-foundry-lottery)** Walkthrough project from cyfrin. Built a lottery project on solidity...
