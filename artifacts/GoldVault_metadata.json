@@ -1,0 +1,107 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "GoldVault__DepositValueZero",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "GoldVault__EntranceRestricted",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "goldBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "safeWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unsafeWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"020-FortKnox/GoldVault.sol": "GoldVault"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"020-FortKnox/GoldVault.sol": {
+			"keccak256": "0x55c6980824fd03f8fe9e7acc7031acdbc734cc99955c10fc291da3f5dfa3c518",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6abb0b9650efd1ba349eb837a293cff2e6be554e97e60e2980dcd3a416d233d3",
+				"dweb:/ipfs/QmXyEtht3GyWy4WxTdSRVJEQxfrkVv6s9sQF91WuYyHmm9"
+			]
+		}
+	},
+	"version": 1
+}

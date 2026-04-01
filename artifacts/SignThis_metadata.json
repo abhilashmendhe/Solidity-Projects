@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"019-SignThis/SignThis.sol": "SignThis"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"019-SignThis/SignThis.sol": {
+			"keccak256": "0x4adae09e260dbec300ef5eb5cdcf6427ea87db3c58f08ff43653457ff3e678a7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6b6f44525d013abf8e104e1299a2c2d25983179cb6f2af344bdba67ef8eb0010",
+				"dweb:/ipfs/QmPZHaogY2UHZM3ceTeGume7T1Es5W6NfQBVKqsZF6FjMb"
+			]
+		}
+	},
+	"version": 1
+}
