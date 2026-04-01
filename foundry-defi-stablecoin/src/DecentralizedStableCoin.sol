@@ -12,20 +12,17 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * Collateral: Exogenous (ETH & BTC)
  * Minting: Algorithmic
  * Relative Stable: Pegged to USD
- * 
- * This is a contract governed by DSC engine. 
+ *
+ * This is a contract governed by DSC engine.
  * Contract is implemeted purely in ERC20
  */
 
 contract DecentralizedStableCoin is ERC20Burnable, Ownable {
-    
     error DecentralizedStableCoin__MustBeMoreThanZero();
     error DecentralizedStableCoin__BurnAmountExceedsBalance();
     error DecentralizedStableCoin__NotZeroAddress();
 
-    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender) {
-        
-    }
+    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender) {}
 
     function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
@@ -43,10 +40,9 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
             revert DecentralizedStableCoin__NotZeroAddress();
         }
         if (_amount <= 0) {
-            revert DecentralizedStableCoin__MustBeMoreThanZero(); 
+            revert DecentralizedStableCoin__MustBeMoreThanZero();
         }
         _mint(_to, _amount);
         return true;
     }
-
 }
