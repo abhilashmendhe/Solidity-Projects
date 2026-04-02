@@ -9,7 +9,12 @@
     1. wETH (ERC20 version of ETH)
     2. wBTC (ERC20 version of BTC)
 
+ - Calculated health factor function
+ - Set health factor if debt is 0
+ - Added a bunch of view function
 
+ 1. What are our invariants/properties?
+ 
 <!-- # Layout of contract -->
 <!-- // Layout of Contract:
 // version
