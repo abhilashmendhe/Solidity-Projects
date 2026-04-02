@@ -9,7 +9,6 @@ import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {ERC20Mock} from "../../test/mocks/ERC20Mock.sol";
 
 contract DSCEngineTest is Test {
-
     DeployDSC deployer;
     DecentralizedStableCoin dsc;
     DSCEngine dscEngine;
@@ -28,7 +27,7 @@ contract DSCEngineTest is Test {
     function setUp() public {
         deployer = new DeployDSC();
         (dsc, dscEngine, config) = deployer.run();
-        (ethUsdPriceFeed, , wEth, , ) = config.activeNetworkConfig();
+        (ethUsdPriceFeed,, wEth,,) = config.activeNetworkConfig();
 
         ERC20Mock(wEth).mint(user, STARTING_ERC20_BALANCE);
     }
@@ -45,7 +44,6 @@ contract DSCEngineTest is Test {
 
     // ----------------  depositCollateral Tests  -----------------
     function testRevertIfCollateralZero() public {
-
         vm.startPrank(user);
         ERC20Mock(wEth).approve(address(dscEngine), amountCollateral);
 
