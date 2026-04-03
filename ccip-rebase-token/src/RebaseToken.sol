@@ -55,7 +55,7 @@ contract RebaseToken is ERC20 {
         // 1. Get the current principal balance of the user (the number of tokens that have actually minted to the user)
         // 2. Multiply the pricicpal balance by the interest rate that has accumulated in the time since the balance was last updated
 
-        return super.balanceOf(_user) * _calculateUserAccumulatedInterestSinceLastUpdated(_user);
+        return super.balanceOf(_user) * _calculateUserAccumulatedInterestSinceLastUpdated(_user) / PRECISION_FACTOR;
     }
 
     /**
