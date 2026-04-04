@@ -15,9 +15,9 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 contract RebaseToken is ERC20, Ownable, AccessControl {
     error RebaseToken__InterestRateCanOnlyDecrease(uint256, uint256);
 
-    uint256 private constant PRECISION_FACTOR = 1e18;
+    uint256 private constant PRECISION_FACTOR = 1e27;
     bytes32 private constant MINT_AND_BURN_ROLE = keccak256("MINT_AND_BURN_ROLE");
-    uint256 private sInterestRate = 5e10; // 0.05% rate per unit of time(seconds) ->
+    uint256 private sInterestRate = (5 * PRECISION_FACTOR) / 1e8; // 0.05% rate per unit of time(seconds) ->
     mapping(address => uint256) private sUserInterestRate;
     mapping(address => uint256) private sLastUpdatedTimestamp;
 
@@ -67,9 +67,6 @@ contract RebaseToken is ERC20, Ownable, AccessControl {
      * @param _amount The amount of tokens to burn
      */
     function burn(address _from, uint256 _amount) external onlyRole(MINT_AND_BURN_ROLE) {
-        if (_amount == type(uint256).max) {
-            _amount = balanceOf(_from);
-        }
         _mintAccruedInterest(_from);
         _burn(_from, _amount);
     }
