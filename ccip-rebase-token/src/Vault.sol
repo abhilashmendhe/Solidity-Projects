@@ -32,10 +32,15 @@ contract Vault {
      * @param _amount The amount rebase tokens to redeem
      */
     function redeem(uint256 _amount) external {
-        // 1. Burn the tokens from the user
+        // 1. Check condition about max _amount
+        if (_amount == type(uint256).max) {
+            _amount = I_REBASE_TOKEN.balanceOf(msg.sender);
+        }
+
+        // 2. Burn the tokens from the user
         I_REBASE_TOKEN.burn(msg.sender, _amount);
 
-        // 2. We need to send the user ETH
+        // 3. We need to send the user ETH
         (bool success,) = payable(msg.sender).call{value: _amount}("");
         if (!success) {
             revert Vault__RedeemFailed();
