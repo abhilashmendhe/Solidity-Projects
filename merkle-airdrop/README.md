@@ -1,3 +1,3 @@
 # Airdrop and Signatures
 
-Giving free tokens to user. We are going to use merkle proofs.
+ Our goal is to build an efficient system for token distribution that allows for eligibility verification via Merkle proofs and authorized, potentially gasless, claims using cryptographic signatures
