@@ -5,8 +5,10 @@ import {Test} from "forge-std/Test.sol";
 import {console} from "forge-std/console.sol";
 import {MerkleAirdrop} from "../src/MerkleAirdrop.sol";
 import {CroissantToken} from "../src/CroissantToken.sol";
+import {ZkSyncChainChecker} from "lib/foundry-devops/src/ZkSyncChainChecker.sol";
+import {DeployMerkleAirdrop} from "script/DeployMerkleAirdrop.s.sol";
 
-contract MerkleAirdropTest is Test {
+contract MerkleAirdropTest is Test, ZkSyncChainChecker {
     MerkleAirdrop public airDrop;
     CroissantToken public token;
 
@@ -20,11 +22,17 @@ contract MerkleAirdropTest is Test {
     uint256 userPrivKey;
 
     function setUp() public {
-        token = new CroissantToken();
         (user, userPrivKey) = makeAddrAndKey("user");
-        airDrop = new MerkleAirdrop(ROOT, token);
-        token.mint(token.owner(), AMOUNT_TO_SEND);
-        token.transfer(address(airDrop), AMOUNT_TO_SEND);
+        if (!isZkSyncChain()) {
+            // deploy with scripts
+            DeployMerkleAirdrop deployer = new DeployMerkleAirdrop();
+            (airDrop, token) = deployer.deployMerkleAirdrop();
+        } else {
+            token = new CroissantToken();
+            airDrop = new MerkleAirdrop(ROOT, token);
+            token.mint(token.owner(), AMOUNT_TO_SEND);
+            token.transfer(address(airDrop), AMOUNT_TO_SEND);
+        }
     }
 
     function testUserCanClaim() public {
