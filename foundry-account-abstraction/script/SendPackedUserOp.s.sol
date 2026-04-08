@@ -1,0 +1,7 @@
+// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+pragma solidity ^0.8.31;
+
+import {Script} from "forge-std/Script.sol";
+import {MinimalAccount} from "../src/ethereum/MinimalAccount.sol";
+
+contract SendPackedUserOp is Script {}
