@@ -4,4 +4,11 @@ pragma solidity ^0.8.31;
 import {Script} from "forge-std/Script.sol";
 import {MinimalAccount} from "../src/ethereum/MinimalAccount.sol";
 
-contract SendPackedUserOp is Script {}
+contract SendPackedUserOp is Script {
+
+    function run() public {
+
+    }
+
+    function deployMinimalAccount() public {}
+}
